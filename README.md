@@ -27,7 +27,7 @@ A simple web-based tool to generate cryptographic hashes from text input. Built 
 
 ---
 
-![screenshot](screenshot.png)
+![screenshot](screenshots/screenshot.png)
 
 ## Setup
 
