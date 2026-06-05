@@ -3,126 +3,233 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hash Generator</title>
+    <title>HashGen — Cryptographic Hash Generator</title>
     <style>
-        *{
+        * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
+
         body {
-            font-family: 'Arial', sans-serif;
+            font-family: Arial, sans-serif;
             background: #000;
             color: #fff;
-            margin: 0;
-            padding: 0;
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
+            padding: 20px;
         }
+
         .container {
             background: #1a1a1a;
             border-radius: 12px;
-            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.5);
-            padding: 25px;
-            width: 90%;
-            max-width: 400px;
-            text-align: center;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
+            padding: 28px 24px;
+            width: 100%;
+            max-width: 420px;
         }
+
         h1 {
-            font-size: 2rem;
-            margin-bottom: 20px;
+            font-size: 1.7rem;
+            margin-bottom: 6px;
             color: #fff;
-            border-bottom: 2px solid #444;
-            padding-bottom: 10px;
         }
+
+        .subtitle {
+            font-size: 13px;
+            color: #888;
+            margin-bottom: 22px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid #2a2a2a;
+        }
+
         label {
-            font-size: 0.9rem;
-            margin-bottom: 5px;
+            font-size: 13px;
+            color: #aaa;
             display: block;
-            text-align: left;
-            color: #ccc;
+            margin-bottom: 6px;
+            margin-top: 14px;
         }
-        form{
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-direction: column;
+
+        input[type="text"],
+        select {
+            width: 100%;
+            padding: 11px 12px;
+            font-size: 14px;
+            border: 1px solid #333;
+            border-radius: 8px;
+            background: #242424;
+            color: #fff;
+            outline: none;
+            transition: border-color 0.2s;
         }
-        input, select, button {
+
+        input[type="text"]:focus,
+        select:focus {
+            border-color: #32cd32;
+        }
+
+        input::placeholder {
+            color: #555;
+        }
+
+        select option {
+            background: #242424;
+        }
+
+        button {
             width: 100%;
             padding: 12px;
-            margin: 10px 0;
-            font-size: 1rem;
-            border: 2px solid #32cd32; /* Light green border */
-            border-radius: 8px;
-            background: #333;
-            color: #fff;
-            transition: border-color 0.3s ease, box-shadow 0.3s ease;
-        }
-        input:focus, select:focus {
-            border-color: #00ff7f; /* Brighter green on focus */
-            box-shadow: 0 0 8px #00ff7f;
-            outline: none;
-        }
-        input::placeholder {
-            color: #888;
-        }
-        button {
-            background: linear-gradient(45deg, #32cd32, #00ff7f); /* Cool gradient */
-            color: #fff;
+            margin-top: 18px;
+            font-size: 15px;
+            font-weight: 600;
+            background: linear-gradient(135deg, #32cd32, #00cc66);
+            color: #000;
             border: none;
-            cursor: pointer;
-            transition: background 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
             border-radius: 8px;
+            cursor: pointer;
+            transition: opacity 0.2s, transform 0.15s;
         }
+
         button:hover {
-            background: linear-gradient(45deg, #00ff7f, #32cd32);
-            transform: scale(1.05);
-            box-shadow: 0 4px 15px rgba(0, 255, 127, 0.5);
+            opacity: 0.9;
+            transform: scale(1.01);
         }
+
         .result {
             margin-top: 20px;
-            font-size: 1rem;
-            color: #00ffcc;
-            word-wrap: break-word;
-            background: #222;
-            padding: 10px;
+            padding: 14px;
+            background: #111;
+            border: 1px solid #2a2a2a;
             border-radius: 8px;
-            border: 1px solid #444;
+        }
+
+        .result-label {
+            font-size: 11px;
+            color: #555;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            margin-bottom: 8px;
+        }
+
+        .result-value {
+            font-size: 13px;
+            color: #00cc66;
+            word-break: break-all;
+            font-family: 'Courier New', monospace;
+            line-height: 1.5;
+        }
+
+        .copy-btn {
+            background: none;
+            border: 1px solid #333;
+            color: #888;
+            font-size: 12px;
+            padding: 5px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+            width: auto;
+            transform: none;
+        }
+
+        .copy-btn:hover {
+            border-color: #555;
+            color: #aaa;
+            opacity: 1;
+            transform: none;
+        }
+
+        .error {
+            margin-top: 14px;
+            padding: 10px 14px;
+            background: #1a0000;
+            border: 1px solid #440000;
+            border-radius: 8px;
+            color: #ff6b6b;
+            font-size: 13px;
+        }
+
+        .footer {
+            margin-top: 20px;
+            font-size: 12px;
+            color: #444;
+            text-align: center;
+        }
+
+        .footer a {
+            color: #555;
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            color: #888;
         }
     </style>
 </head>
 <body>
+
     <div class="container">
-        <h1>Hash Generator</h1>
+        <h1>HashGen</h1>
+        <div class="subtitle">Cryptographic hash generator — 13 algorithms</div>
+
         <form method="post">
-            <label for="hash">Plain Text:</label>
-            <input type="text" name="text" id="hash" placeholder="Enter text" required>
-            <label for="hashalgo">Choose Hash Algorithm:</label>
-            <select name="algorithm" id="hashalgo" required>
+            <label for="text">Input Text</label>
+            <input type="text" name="text" id="text" placeholder="Enter text to hash" required />
+
+            <label for="algorithm">Algorithm</label>
+            <select name="algorithm" id="algorithm">
                 <option value="md5">MD5</option>
-                <option value="sha256">SHA-256</option>
                 <option value="sha1">SHA-1</option>
+                <option value="sha224">SHA-224</option>
+                <option value="sha256" selected>SHA-256</option>
                 <option value="sha384">SHA-384</option>
                 <option value="sha512">SHA-512</option>
+                <option value="sha3_224">SHA3-224</option>
+                <option value="sha3_256">SHA3-256</option>
+                <option value="sha3_384">SHA3-384</option>
                 <option value="sha3_512">SHA3-512</option>
                 <option value="blake2s">BLAKE2s</option>
-                <option value="sha224">SHA-224</option>
-                <option value="shake_128">SHAKE-128</option>
-                <option value="sha3_256">SHA3-256</option>
                 <option value="blake2b">BLAKE2b</option>
-                <option value="sha3_384">SHA3-384</option>
-                <option value="sha3_224">SHA3-224</option>
+                <option value="shake_128">SHAKE-128</option>
             </select>
+
             <button type="submit">Generate Hash</button>
         </form>
+
+        {% if error %}
+        <div class="error">{{ error }}</div>
+        {% endif %}
+
         {% if hash_result %}
         <div class="result">
-            <p><strong>Hash Result:</strong> {{ hash_result }}</p>
+            <div class="result-label">Hash Output</div>
+            <div class="result-value" id="hashOutput">{{ hash_result }}</div>
+            <button class="copy-btn" onclick="copyHash()">Copy</button>
         </div>
         {% endif %}
     </div>
+
+    <div class="footer">
+        Built by
+        <a href="https://github.com/heynick1337" target="_blank">Nikhil Sahu</a>
+        &nbsp;·&nbsp;
+        <a href="https://linkedin.com/in/sahunikhil01" target="_blank">LinkedIn</a>
+    </div>
+
+    <script>
+        function copyHash() {
+            const text = document.getElementById('hashOutput').innerText;
+            navigator.clipboard.writeText(text).then(() => {
+                const btn = document.querySelector('.copy-btn');
+                btn.textContent = 'Copied!';
+                setTimeout(() => { btn.textContent = 'Copy'; }, 1500);
+            });
+        }
+    </script>
+
 </body>
 </html>
