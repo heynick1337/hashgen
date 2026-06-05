@@ -27,7 +27,7 @@ A simple web-based tool to generate cryptographic hashes from text input. Built 
 
 ---
 
-### Hashing
+### Screenshot
 ![screenshot](screenshots/screenshot.png)
 
 ## Setup
@@ -61,6 +61,7 @@ hashgen/
 ├── app.py              # Flask backend
 ├── requirements.txt
 ├── vercel.json         # Vercel deployment config
+├── screenshot.png
 └── templates/
     └── index.html      # Frontend UI
 ```
